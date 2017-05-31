@@ -13,12 +13,23 @@ function toastr($toastr = [])
     return isset($toastr['path']) ? redirect($toastr['path']) : back();
 }
 
+/**
+ * @param $text
+ * @param array $parameters
+ * @return mixed
+ */
 function lang($text, $parameters = [])
 {
     return str_replace('Laradmin.', '', trans('Laradmin.' . $text, $parameters));
 }
 
-function uploadImage($file, $path)
+/**
+ * @param $file
+ * @param $path
+ * @param array $size
+ * @return bool|string
+ */
+function uploadImage($file, $path, $size = [])
 {
     try {
         $fileExtension = $file->getClientOriginalExtension();
@@ -26,6 +37,14 @@ function uploadImage($file, $path)
         $filePath = 'upload/' . $path;
         $result = $file->move('upload/' . $path, $fileName);
         if ($result) {
+            if (count($size)) {
+                if (!isset($size['height'])) {
+                    $image = Image::make($filePath . '/' . $fileName)->fit($size['width']);
+                } else {
+                    $image = Image::make($filePath . '/' . $fileName)->resize($size['width'], $size['height']);
+                }
+                $image->save($filePath . '/' . $fileName);
+            }
             return '/' . $filePath . '/' . $fileName;
         }
         return false;

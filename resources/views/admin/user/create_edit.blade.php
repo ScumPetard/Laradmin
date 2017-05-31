@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="block">头像</label>
-                                            <img id="preview" src="{{ isset($user) ? $user->avatar : '/resource/admin/images/avatar.jpg' }}" width="150" class="img-circle" onclick="$('input[name=avatar]').click();">
+                                            <img id="preview" src="{{ isset($user) ? $user->avatar : '/avatar.jpg' }}" style="width: 150px;height: 150px;" class="img-circle" onclick="$('input[name=avatar]').click();">
                                             <input type="file" onchange="previewImage(this)" name="avatar" value="" class="hidden">
                                         </div>
                                         <div class="form-group">
@@ -52,8 +52,7 @@
                                                     <div class="col-md-3">
                                                         <div class="checkbox i-checks inline">
                                                             <label>
-                                                                <input
-                                                                        name="roles[]"
+                                                                <input  name="roles[]"
                                                                         type="checkbox"
                                                                         value="{{ $role->id }}"
                                                                 @if(isset($user))
